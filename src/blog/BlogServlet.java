@@ -18,5 +18,7 @@ public class BlogServlet extends HttpServlet {
         } else {
             resp.sendRedirect(userService.createLoginURL(req.getRequestURI()));
         }
+
+
     }
 }

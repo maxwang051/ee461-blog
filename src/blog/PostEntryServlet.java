@@ -14,16 +14,23 @@ import java.util.HashMap;
 
 public class PostEntryServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Date current = new Date();
+
         UserService userService = UserServiceFactory.getUserService();
         User user = userService.getCurrentUser();
 
         String title = req.getParameter("title");
         String body = req.getParameter("body");
-        Date date = new Date();
 
-        Entry entry = new Entry(user, title, body);
+        if (title.equals("") || body.equals("") ) {
+            resp.sendRedirect("/newPost.jsp");
+        } else {
 
-        ofy().save().entity(entry).now();
-        resp.sendRedirect("/index.jsp");
+            Entry entry = new Entry(user, title, body);
+
+            ofy().save().entity(entry).now();
+            resp.sendRedirect("/index.jsp");
+        }
+
     }
 }
